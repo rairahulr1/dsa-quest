@@ -1,0 +1,18 @@
+{
+  "awarded": {
+    "two-sum": {
+      "xp": 50,
+      "date": "2026-10-06",
+      "kind": "dsa",
+      "pattern": "arrays-two-pointers"
+    }
+  },
+  "log": [
+    {
+      "date": "2026-10-06",
+      "id": "two-sum",
+      "xp": 50,
+      "kind": "dsa"
+    }
+  ]
+}

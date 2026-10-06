@@ -5,9 +5,9 @@ require_once __DIR__ . '/valid-parentheses.php';
 function test_valid_parentheses() {
     $fail = 0;
     $cases = [
-    ['args' => [['()']], 'expected' => true],
-    ['args' => [['()[]{}']], 'expected' => true],
-    ['args' => [['(]']], 'expected' => false],
+    ['args' => ['()'], 'expected' => true],
+    ['args' => ['()[]{}'], 'expected' => true],
+    ['args' => ['(]'], 'expected' => false],
     ];
     foreach ($cases as $i => $c) {
         try {

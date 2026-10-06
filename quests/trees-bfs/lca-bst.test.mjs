@@ -18,11 +18,11 @@ function toTree(arr) {
 }
 
 test('Lowest Common Ancestor of a BST — case 1', () => {
-  assert.equal(lowestCommonAncestor(toTree([[6,2,8,0,4,7,9,null,null,3,5],2,8])).val, 6);
+  assert.equal(lowestCommonAncestor(toTree([6,2,8,0,4,7,9,null,null,3,5]), 2, 8).val, 6);
 });
 test('Lowest Common Ancestor of a BST — case 2', () => {
-  assert.equal(lowestCommonAncestor(toTree([[6,2,8,0,4,7,9,null,null,3,5],2,4])).val, 2);
+  assert.equal(lowestCommonAncestor(toTree([6,2,8,0,4,7,9,null,null,3,5]), 2, 4).val, 2);
 });
 test('Lowest Common Ancestor of a BST — case 3', () => {
-  assert.equal(lowestCommonAncestor(toTree([[2,1],2,1])).val, 2);
+  assert.equal(lowestCommonAncestor(toTree([2,1]), 2, 1).val, 2);
 });

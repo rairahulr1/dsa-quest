@@ -2,7 +2,7 @@
 // Generates quests/ and php/ from data/quests.mjs.
 // Usage: npm run generate
 import { execSync } from 'node:child_process';
-import { mkdirSync, rmSync, writeFileSync } from 'node:fs';
+import { mkdirSync, rmSync, writeFileSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { patterns } from '../data/quests.mjs';
@@ -12,6 +12,27 @@ const ROOT = dirname(dirname(fileURLToPath(import.meta.url)));
 const rm = (p) => rmSync(join(ROOT, p), { recursive: true, force: true });
 const mkdir = (p) => mkdirSync(join(ROOT, p), { recursive: true });
 const write = (p, content) => writeFileSync(join(ROOT, p), content);
+
+// Snapshot implemented solutions before the wipe — generate never clobbers work.
+function snapshotSolutions(dir) {
+  const saved = new Map();
+  const walk = (d) => {
+    let entries;
+    try { entries = readdirSync(join(ROOT, d)); } catch { return; }
+    for (const e of entries) {
+      const rel = d ? `${d}/${e}` : e;
+      const full = join(ROOT, rel);
+      if (statSync(full).isDirectory()) walk(rel);
+      else if (/\.(mjs|php)$/.test(rel)) {
+        const content = readFileSync(full, 'utf8');
+        if (!content.includes('NOT IMPLEMENTED')) saved.set(rel, content);
+      }
+    }
+  };
+  walk(dir);
+  return saved;
+}
+const saved = new Map([...snapshotSolutions('quests'), ...snapshotSolutions('php')]);
 
 rm('quests');
 rm('php');
@@ -96,15 +117,23 @@ function toAdj(node) {
   }
 
   const bodies = cases.map((c, i) => {
-    const treeArgs = p.treeArgs || [];
-    const argExprs = c.args.map((a, ai) => {
-      if (p.kind === 'tree' && treeArgs.includes(ai)) return `toTree(${JSON.stringify(a)})`;
-      if (p.kind === 'cycle') return `toCycleList(${JSON.stringify(a.list)}, ${a.pos})`;
-      if (p.kind === 'graph') return `toGraph(${JSON.stringify(a)})`;
-      if (p.kind === 'll' && p.multiList) return `toLists(${JSON.stringify(a)})`;
-      if (p.kind === 'll') return `toList(${JSON.stringify(a)})`;
-      return JSON.stringify(a);
-    });
+    // Data convention: c.args = [argList] for every non-class quest
+    // (cycle quests: c.args = [{list, pos}]).
+    let argExprs;
+    if (p.kind === 'cycle') {
+      const cyc = c.args[0];
+      argExprs = [`toCycleList(${JSON.stringify(cyc.list)}, ${cyc.pos})`];
+    } else {
+      const argList = c.args[0];
+      const treeArgs = p.treeArgs || [];
+      argExprs = argList.map((a, ai) => {
+        if (p.kind === 'tree' && treeArgs.includes(ai)) return `toTree(${JSON.stringify(a)})`;
+        if (p.kind === 'graph') return `toGraph(${JSON.stringify(a)})`;
+        if (p.kind === 'll' && p.multiList) return `toLists(${JSON.stringify(a)})`;
+        if (p.kind === 'll') return `toList(${JSON.stringify(a)})`;
+        return JSON.stringify(a);
+      });
+    }
     const call = p.kind === 'll' || p.kind === 'cycle' || p.kind === 'graph' || (p.kind === 'tree' && !p.expectedIsValue)
       ? `${p.fn}(${argExprs.join(', ')})`
       : `${p.fn}(${argExprs.join(', ')})`;
@@ -213,9 +242,13 @@ function phpTest(p) {
   else if (cmp === 'intervals') cmpExpr = 'sameIntervals($got, $c[\'expected\'])';
   else cmpExpr = '$got == $c[\'expected\']';
 
-  const cases = (p.tests || []).map((c) => `    ['args' => ${phpLiteral(c.args)}, 'expected' => ${phpLiteral(c.expected)}],`).join('\n');
+  // Data convention: c.args = [argList] for every non-class quest
+  // (cycle quests: c.args = [{list, pos}] -> PHP takes (list, pos)).
+  const cases = (p.tests || []).map((c) => {
+    const caseArgs = p.kind === 'cycle' ? [c.args[0].list, c.args[0].pos] : c.args[0];
+    return `    ['args' => ${phpLiteral(caseArgs)}, 'expected' => ${phpLiteral(c.expected)}],`;
+  }).join('\n');
 
-  let callPrefix = '';
   let body;
   if (p.kind === 'class') {
     const ops = phpLiteral(p.ops);
@@ -290,5 +323,9 @@ for (const pat of patterns) {
   }
 }
 
+// Restore implemented solutions on top of the fresh stubs.
+for (const [rel, content] of saved) write(rel, content);
+
 const total = patterns.reduce((n, p) => n + p.problems.length, 0);
-console.log(`Generated ${patterns.length} patterns, ${total} quests → quests/ and php/`);
+console.log(`Generated ${patterns.length} patterns, ${total} quests → quests/ and php/` +
+  (saved.size ? ` · preserved ${saved.size} implemented solution(s)` : ''));

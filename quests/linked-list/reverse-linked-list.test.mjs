@@ -13,11 +13,11 @@ function toLists(arrs) { return (arrs || []).map(toList); }
 function toArray(head) { const out = []; while (head) { out.push(head.val); head = head.next; } return out; }
 
 test('Reverse Linked List — case 1', () => {
-  assert.deepEqual(toArray(reverseList(toList([[1,2,3,4,5]]))), [5,4,3,2,1]);
+  assert.deepEqual(toArray(reverseList(toList([1,2,3,4,5]))), [5,4,3,2,1]);
 });
 test('Reverse Linked List — case 2', () => {
-  assert.deepEqual(toArray(reverseList(toList([[1,2]]))), [2,1]);
+  assert.deepEqual(toArray(reverseList(toList([1,2]))), [2,1]);
 });
 test('Reverse Linked List — case 3', () => {
-  assert.deepEqual(toArray(reverseList(toList([]))), []);
+  assert.deepEqual(toArray(reverseList()), []);
 });

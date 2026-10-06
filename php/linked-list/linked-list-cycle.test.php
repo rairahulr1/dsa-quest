@@ -5,9 +5,9 @@ require_once __DIR__ . '/linked-list-cycle.php';
 function test_linked_list_cycle() {
     $fail = 0;
     $cases = [
-    ['args' => [{'list' => [3, 2, 0, -4], 'pos' => 1}], 'expected' => true],
-    ['args' => [{'list' => [1, 2], 'pos' => 0}], 'expected' => true],
-    ['args' => [{'list' => [1], 'pos' => -1}], 'expected' => false],
+    ['args' => [[3, 2, 0, -4], 1], 'expected' => true],
+    ['args' => [[1, 2], 0], 'expected' => true],
+    ['args' => [[1], -1], 'expected' => false],
     ];
     foreach ($cases as $i => $c) {
         try {

@@ -13,11 +13,11 @@ function toLists(arrs) { return (arrs || []).map(toList); }
 function toArray(head) { const out = []; while (head) { out.push(head.val); head = head.next; } return out; }
 
 test('Merge Two Sorted Lists — case 1', () => {
-  assert.deepEqual(toArray(mergeTwoLists(toList([[1,2,4],[1,3,4]]))), [1,1,2,3,4,4]);
+  assert.deepEqual(toArray(mergeTwoLists(toList([1,2,4]), toList([1,3,4]))), [1,1,2,3,4,4]);
 });
 test('Merge Two Sorted Lists — case 2', () => {
-  assert.deepEqual(toArray(mergeTwoLists(toList([[],[]]))), []);
+  assert.deepEqual(toArray(mergeTwoLists(toList([]), toList([]))), []);
 });
 test('Merge Two Sorted Lists — case 3', () => {
-  assert.deepEqual(toArray(mergeTwoLists(toList([[],[0]]))), [0]);
+  assert.deepEqual(toArray(mergeTwoLists(toList([]), toList([0]))), [0]);
 });

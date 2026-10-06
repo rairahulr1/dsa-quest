@@ -5,9 +5,9 @@ require_once __DIR__ . '/single-number.php';
 function test_single_number() {
     $fail = 0;
     $cases = [
-    ['args' => [[[2, 2, 1]]], 'expected' => 1],
-    ['args' => [[[4, 1, 2, 1, 2]]], 'expected' => 4],
-    ['args' => [[[1]]], 'expected' => 1],
+    ['args' => [[2, 2, 1]], 'expected' => 1],
+    ['args' => [[4, 1, 2, 1, 2]], 'expected' => 4],
+    ['args' => [[1]], 'expected' => 1],
     ];
     foreach ($cases as $i => $c) {
         try {

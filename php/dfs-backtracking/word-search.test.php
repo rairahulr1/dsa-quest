@@ -5,9 +5,9 @@ require_once __DIR__ . '/word-search.php';
 function test_word_search() {
     $fail = 0;
     $cases = [
-    ['args' => [[['A', 'B', 'C', 'E'], ['S', 'F', 'C', 'S'], ['A', 'D', 'E', 'E']], 'ABCCED'], 'expected' => true],
-    ['args' => [[['A', 'B', 'C', 'E'], ['S', 'F', 'C', 'S'], ['A', 'D', 'E', 'E']], 'SEE'], 'expected' => true],
-    ['args' => [[['A', 'B', 'C', 'E'], ['S', 'F', 'C', 'S'], ['A', 'D', 'E', 'E']], 'ABCB'], 'expected' => false],
+    ['args' => [['A', 'B', 'C', 'E'], ['S', 'F', 'C', 'S'], ['A', 'D', 'E', 'E']], 'expected' => true],
+    ['args' => [['A', 'B', 'C', 'E'], ['S', 'F', 'C', 'S'], ['A', 'D', 'E', 'E']], 'expected' => true],
+    ['args' => [['A', 'B', 'C', 'E'], ['S', 'F', 'C', 'S'], ['A', 'D', 'E', 'E']], 'expected' => false],
     ];
     foreach ($cases as $i => $c) {
         try {

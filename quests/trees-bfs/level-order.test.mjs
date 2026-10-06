@@ -18,11 +18,11 @@ function toTree(arr) {
 }
 
 test('Binary Tree Level Order Traversal — case 1', () => {
-  assert.deepEqual(levelOrder(toTree([[3,9,20,null,null,15,7]])), [[3],[9,20],[15,7]]);
+  assert.deepEqual(levelOrder(toTree([3,9,20,null,null,15,7])), [[3],[9,20],[15,7]]);
 });
 test('Binary Tree Level Order Traversal — case 2', () => {
-  assert.deepEqual(levelOrder(toTree([[1]])), [[1]]);
+  assert.deepEqual(levelOrder(toTree([1])), [[1]]);
 });
 test('Binary Tree Level Order Traversal — case 3', () => {
-  assert.deepEqual(levelOrder(toTree([])), []);
+  assert.deepEqual(levelOrder(), []);
 });

@@ -5,9 +5,9 @@ require_once __DIR__ . '/jump-game.php';
 function test_jump_game() {
     $fail = 0;
     $cases = [
-    ['args' => [[[2, 3, 1, 1, 4]]], 'expected' => true],
-    ['args' => [[[3, 2, 1, 0, 4]]], 'expected' => false],
-    ['args' => [[[0]]], 'expected' => true],
+    ['args' => [[2, 3, 1, 1, 4]], 'expected' => true],
+    ['args' => [[3, 2, 1, 0, 4]], 'expected' => false],
+    ['args' => [[0]], 'expected' => true],
     ];
     foreach ($cases as $i => $c) {
         try {

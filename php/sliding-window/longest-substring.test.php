@@ -5,9 +5,9 @@ require_once __DIR__ . '/longest-substring.php';
 function test_longest_substring() {
     $fail = 0;
     $cases = [
-    ['args' => [['abcabcbb']], 'expected' => 3],
-    ['args' => [['bbbbb']], 'expected' => 1],
-    ['args' => [['pwwkew']], 'expected' => 3],
+    ['args' => ['abcabcbb'], 'expected' => 3],
+    ['args' => ['bbbbb'], 'expected' => 1],
+    ['args' => ['pwwkew'], 'expected' => 3],
     ];
     foreach ($cases as $i => $c) {
         try {

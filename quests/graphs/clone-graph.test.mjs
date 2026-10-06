@@ -22,18 +22,18 @@ function toAdj(node) {
 }
 
 test('Clone Graph — case 1', () => {
-  const original = toGraph([[2,4],[1,3],[2,4],[1,3]]);
+  const original = toGraph([2,4]);
   const got = cloneGraph(original);
   assert.deepEqual(toAdj(got), [[2,4],[1,3],[2,4],[1,3]]);
   assert.notEqual(got, original); // deep clone, not the same node
 });
 test('Clone Graph — case 2', () => {
-  const original = toGraph([]);
+  const original = undefined;
   const got = cloneGraph(original);
   assert.deepEqual(toAdj(got), []);
 });
 test('Clone Graph — case 3', () => {
-  const original = toGraph([[]]);
+  const original = toGraph([]);
   const got = cloneGraph(original);
   assert.deepEqual(toAdj(got), [[]]);
   assert.notEqual(got, original); // deep clone, not the same node

@@ -18,11 +18,11 @@ function toTree(arr) {
 }
 
 test('Validate Binary Search Tree — case 1', () => {
-  assert.deepEqual(isValidBST(toTree([[2,1,3]])), true);
+  assert.deepEqual(isValidBST(toTree([2,1,3])), true);
 });
 test('Validate Binary Search Tree — case 2', () => {
-  assert.deepEqual(isValidBST(toTree([[5,1,4,null,null,3,6]])), false);
+  assert.deepEqual(isValidBST(toTree([5,1,4,null,null,3,6])), false);
 });
 test('Validate Binary Search Tree — case 3', () => {
-  assert.deepEqual(isValidBST(toTree([[1,1]])), false);
+  assert.deepEqual(isValidBST(toTree([1,1])), false);
 });

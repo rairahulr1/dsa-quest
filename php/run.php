@@ -6,7 +6,11 @@ $ledger = __DIR__ . '/../xp/ledger.json';
 $awarded = [];
 if (is_file($ledger)) {
     $data = json_decode(file_get_contents($ledger), true);
-    $awarded = array_keys($data['awarded'] ?? []);
+    // Only PHP-ported quests (kind=php) run here — a DSA award (kind=dsa)
+    // covers the JS test, not the PHP port.
+    foreach (($data['awarded'] ?? []) as $id => $entry) {
+        if (($entry['kind'] ?? 'dsa') === 'php') $awarded[] = $id;
+    }
 }
 
 $files = glob(__DIR__ . '/*/*.test.php');

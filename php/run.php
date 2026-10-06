@@ -1,7 +1,7 @@
 <?php
 // PHP quest runner — the CI oracle's PHP half.
-// Only runs quests that have been awarded XP (see xp/ledger.json),
-// so the scaffold's unimplemented stubs never break CI.
+// Only runs PHP-ported quests (xp/ledger.json, kind=php),
+// so unimplemented stubs never break CI.
 $ledger = __DIR__ . '/../xp/ledger.json';
 $awarded = [];
 if (is_file($ledger)) {

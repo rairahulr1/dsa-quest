@@ -15,6 +15,7 @@ npm run xp -- award <ref> --kind explain|sd|boss [--note "..."]  # 100/200/300 X
 npm run xp -- status  # level, pace, per-pattern breakdown
 npm run xp -- review  # spaced repetition: due at day 1 / 7 / 30
 npm run generate      # regenerate quests/ and php/ from data/quests.mjs
+node scripts/board.mjs  # (re)create the Projects board + one Issue per quest
 ```
 
 ## The game
@@ -43,6 +44,18 @@ npm run generate      # regenerate quests/ and php/ from data/quests.mjs
 implemented, and it is **committed**. Awarded quests are recorded in `xp/ledger.json`,
 and GitHub Actions re-runs exactly those on every push — CI green means nothing you
 claimed has regressed. Unsolved stubs are never run, so CI stays green while you work.
+
+## Quest board
+
+`node scripts/board.mjs` creates the GitHub Projects board and one Issue per quest
+(45 DSA + 6 SD topics + 10 SD scenarios + 4 boss battles + day-0 setup = 76 quests
+on the board). It is idempotent — safe to re-run.
+
+First run needs the project scope once (interactive):
+```bash
+gh auth refresh -s read:project -s project
+node scripts/board.mjs
+```
 
 ## Structure
 

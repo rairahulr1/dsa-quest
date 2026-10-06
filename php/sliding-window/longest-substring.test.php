@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/_helpers.php';
+require_once __DIR__ . '/../_helpers.php';
 require_once __DIR__ . '/longest-substring.php';
 
 function test_longest_substring() {

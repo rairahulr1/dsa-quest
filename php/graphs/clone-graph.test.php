@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/_helpers.php';
+require_once __DIR__ . '/../_helpers.php';
 require_once __DIR__ . '/clone-graph.php';
 
 function test_clone_graph() {

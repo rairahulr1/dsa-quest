@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/_helpers.php';
+require_once __DIR__ . '/../_helpers.php';
 require_once __DIR__ . '/assign-cookies.php';
 
 function test_assign_cookies() {

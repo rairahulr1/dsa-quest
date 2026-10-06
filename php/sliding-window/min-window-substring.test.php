@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/_helpers.php';
+require_once __DIR__ . '/../_helpers.php';
 require_once __DIR__ . '/min-window-substring.php';
 
 function test_min_window_substring() {

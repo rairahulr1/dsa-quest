@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/_helpers.php';
+require_once __DIR__ . '/../_helpers.php';
 require_once __DIR__ . '/design-add-search-words.php';
 
 function test_design_add_search_words() {

@@ -259,7 +259,7 @@ function phpTest(p) {
   } else {
     body = `    $cases = [\n${cases}\n    ];\n    foreach ($cases as $i => $c) {\n        try {\n            $got = ${p.fn}(...$c['args']);\n            if (!(${cmpExpr})) { fwrite(STDERR, "case $i failed\\n"); $fail++; }\n        } catch (\\Throwable $e) { fwrite(STDERR, "case $i threw: {$e->getMessage()}\\n"); $fail++; }\n    }`;
   }
-  return `<?php\nrequire_once __DIR__ . '/_helpers.php';\nrequire_once __DIR__ . '/${p.id}.php';\n\nfunction ${fnName}() {\n    $fail = 0;\n${body}\n    return $fail;\n}\n`;
+  return `<?php\nrequire_once __DIR__ . '/../_helpers.php';\nrequire_once __DIR__ . '/${p.id}.php';\n\nfunction ${fnName}() {\n    $fail = 0;\n${body}\n    return $fail;\n}\n`;
 }
 
 function phpLiteral(v) {

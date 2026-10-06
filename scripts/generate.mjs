@@ -23,7 +23,7 @@ function snapshotSolutions(dir) {
       const rel = d ? `${d}/${e}` : e;
       const full = join(ROOT, rel);
       if (statSync(full).isDirectory()) walk(rel);
-      else if (/\.(mjs|php)$/.test(rel)) {
+      else if (/\.(mjs|php)$/.test(rel) && !/\.test\.(mjs|php)$/.test(rel)) {
         const content = readFileSync(full, 'utf8');
         if (!content.includes('NOT IMPLEMENTED')) saved.set(rel, content);
       }

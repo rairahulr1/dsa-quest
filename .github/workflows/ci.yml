@@ -1,0 +1,30 @@
+name: CI oracle
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  js-oracle:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Run awarded DSA quests
+        run: node scripts/ci.mjs
+
+  php-oracle:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          tools: composer
+      - name: Run awarded PHP SPL quests
+        run: php php/run.php

@@ -1,0 +1,15 @@
+{
+  "name": "dsa-quest",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "DSA Quest OS — gamified DSA + system-design sprint. XP for evidence, never for consumption.",
+  "scripts": {
+    "test": "node --test",
+    "draw": "node scripts/draw.mjs",
+    "review": "node scripts/xp.mjs review",
+    "xp": "node scripts/xp.mjs",
+    "generate": "node scripts/generate.mjs",
+    "php": "php php/run.php"
+  }
+}

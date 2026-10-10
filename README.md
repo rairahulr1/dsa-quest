@@ -15,8 +15,24 @@ npm run xp -- award <ref> --kind explain|sd|boss [--note "..."]  # 100/200/300 X
 npm run xp -- status  # level, pace, per-pattern breakdown
 npm run xp -- review  # spaced repetition: due at day 1 / 7 / 30
 npm run generate      # regenerate quests/ and php/ from data/quests.mjs
+npm run dashboard     # regenerate docs/index.html (gamified learning dashboard)
 node scripts/board.mjs  # (re)create the Projects board + one Issue per quest
 ```
+
+## Dashboard
+
+`docs/index.html` is a gamified learning dashboard (HeyCoach-style module cards,
+progress bars and growth graph — running the game layer above). It is generated
+from the real quest data and XP ledger:
+
+```bash
+npm run dashboard
+php -S 127.0.0.1:8000 -t docs   # serve it locally
+```
+
+Host it free on GitHub Pages: Settings → Pages → Source: **Deploy from a branch → docs/**.
+It recomputes XP, level, streak, growth and per-problem status from `xp/ledger.json`
+every time it is generated — re-run after any `xp award`.
 
 ## The game
 
@@ -48,7 +64,7 @@ claimed has regressed. Unsolved stubs are never run, so CI stays green while you
 ## Quest board
 
 `node scripts/board.mjs` creates the GitHub Projects board and one Issue per quest
-(45 DSA + 6 SD topics + 10 SD scenarios + 4 boss battles + day-0 setup = 76 quests
+(45 DSA + 6 SD topics + 10 SD scenarios + 4 boss battles + day-0 setup = 66 quests
 on the board). It is idempotent — safe to re-run.
 
 First run needs the project scope once (interactive):

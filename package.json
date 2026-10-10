@@ -10,6 +10,7 @@
     "review": "node scripts/xp.mjs review",
     "xp": "node scripts/xp.mjs",
     "generate": "node scripts/generate.mjs",
+    "dashboard": "node scripts/dashboard.mjs",
     "php": "php php/run.php"
   }
 }

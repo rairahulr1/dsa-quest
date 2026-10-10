@@ -71,6 +71,7 @@ const next = allProblems.find((p) => !awarded[p.id]);
 
 const shareText = 'DSA Quest OS — my gamified DSA + system-design sprint: ' + dsaSolved + '/45 problems solved, ' + totalXp + ' XP, Level ' + level + ' (' + streak + 'd streak). XP for evidence, never for consumption.';
 const ogTitle = 'My DSA sprint — ' + dsaSolved + '/45 solved · ' + totalXp + ' XP · Level ' + level;
+const shareDesc = shareText.length > 110 ? shareText.slice(0, 110).trimEnd() + '…' : shareText;
 
 function remoteBase() {
   try {
@@ -364,6 +365,7 @@ const html = '<!doctype html>' +
   '<span class="rounded-xl border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs font-mono"><span class="text-slate-500">STREAK</span> <span class="font-bold text-amber-300">' + streak + 'd ×' + multiplier.toFixed(1) + '</span></span>' +
   '</div>' +
   '<div class="flex items-center gap-1.5">' +
+  '<button type="button" onclick="openPreview()" title="Preview share" aria-label="Preview share" class="flex h-8 w-8 items-center justify-center rounded-lg border border-white/10 bg-white/[0.03] hover:border-emerald-400/50 hover:bg-emerald-500/10 transition"><svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>' +
   '<button type="button" onclick="share(\'linkedin\')" title="Share on LinkedIn" aria-label="Share on LinkedIn" class="flex h-8 w-8 items-center justify-center rounded-lg border border-white/10 bg-white/[0.03] hover:border-sky-400/50 hover:bg-sky-500/10 transition"><svg viewBox="0 0 24 24" class="h-5 w-5"><rect width="24" height="24" rx="5" fill="#0A66C2"/><text x="12" y="17.2" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="13.5" font-weight="700" fill="#fff">in</text></svg></button>' +
   '<button type="button" onclick="share(\'reddit\')" title="Share on Reddit" aria-label="Share on Reddit" class="flex h-8 w-8 items-center justify-center rounded-lg border border-white/10 bg-white/[0.03] hover:border-orange-400/50 hover:bg-orange-500/10 transition"><svg viewBox="0 0 24 24" class="h-5 w-5"><circle cx="12" cy="13.6" r="6.4" fill="#FF4500"/><circle cx="9.7" cy="13" r="1.05" fill="#fff"/><circle cx="14.3" cy="13" r="1.05" fill="#fff"/><path d="M8.2 9.4 6.3 5.7M15.8 9.4l1.9-3.7" stroke="#FF4500" stroke-width="1.5" stroke-linecap="round"/><circle cx="5.9" cy="5" r="1.25" fill="#FF4500"/><circle cx="18.1" cy="5" r="1.25" fill="#FF4500"/><circle cx="7" cy="14.6" r="1.35" fill="#FF4500"/><circle cx="17" cy="14.6" r="1.35" fill="#FF4500"/><path d="M9.6 16.9q2.4 1.5 4.8 0" stroke="#fff" stroke-width="1.1" fill="none" stroke-linecap="round"/></svg></button>' +
   '</div>' +
@@ -499,6 +501,7 @@ const html = '<!doctype html>' +
   '<p class="mt-1 text-sm text-slate-400">The recruiter-checkable artefact: public repo, green CI, quest board, documented trade-offs.</p></div>' +
   '<div class="flex items-center gap-2 pb-0.5">' +
   '<span class="text-xs text-slate-500">Share progress — no URL to copy</span>' +
+  '<button type="button" onclick="openPreview()" title="Preview share" aria-label="Preview share" class="flex h-7 w-7 items-center justify-center rounded-lg border border-white/10 bg-white/[0.03] hover:border-emerald-400/50 hover:bg-emerald-500/10 transition"><svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>' +
   '<button type="button" onclick="share(\'linkedin\')" title="Share on LinkedIn" aria-label="Share on LinkedIn" class="flex h-7 w-7 items-center justify-center rounded-lg border border-white/10 bg-white/[0.03] hover:border-sky-400/50 hover:bg-sky-500/10 transition"><svg viewBox="0 0 24 24" class="h-4 w-4"><rect width="24" height="24" rx="5" fill="#0A66C2"/><text x="12" y="17.2" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="13.5" font-weight="700" fill="#fff">in</text></svg></button>' +
   '<button type="button" onclick="share(\'reddit\')" title="Share on Reddit" aria-label="Share on Reddit" class="flex h-7 w-7 items-center justify-center rounded-lg border border-white/10 bg-white/[0.03] hover:border-orange-400/50 hover:bg-orange-500/10 transition"><svg viewBox="0 0 24 24" class="h-4 w-4"><circle cx="12" cy="13.6" r="6.4" fill="#FF4500"/><circle cx="9.7" cy="13" r="1.05" fill="#fff"/><circle cx="14.3" cy="13" r="1.05" fill="#fff"/><path d="M8.2 9.4 6.3 5.7M15.8 9.4l1.9-3.7" stroke="#FF4500" stroke-width="1.5" stroke-linecap="round"/><circle cx="5.9" cy="5" r="1.25" fill="#FF4500"/><circle cx="18.1" cy="5" r="1.25" fill="#FF4500"/><circle cx="7" cy="14.6" r="1.35" fill="#FF4500"/><circle cx="17" cy="14.6" r="1.35" fill="#FF4500"/><path d="M9.6 16.9q2.4 1.5 4.8 0" stroke="#fff" stroke-width="1.1" fill="none" stroke-linecap="round"/></svg></button>' +
   '</div></div>' +
@@ -547,7 +550,61 @@ const html = '<!doctype html>' +
   '</footer>' +
   '</div>' +
 
+  // ---------- share preview modal ----------
+  '<div id="share-preview" class="fixed inset-0 z-50 hidden items-center justify-center p-4">' +
+  '<div class="absolute inset-0 bg-black/70 backdrop-blur-sm" onclick="closePreview()"></div>' +
+  '<div class="relative max-h-[85vh] w-full max-w-lg overflow-y-auto rounded-2xl border border-white/10 bg-[#0d1424] shadow-2xl">' +
+  '<div class="flex items-center justify-between border-b border-white/10 px-5 py-3.5">' +
+  '<div class="text-sm font-bold text-slate-100">Share preview</div>' +
+  '<button type="button" onclick="closePreview()" aria-label="Close preview" class="flex h-7 w-7 items-center justify-center rounded-lg border border-white/10 bg-white/[0.03] text-slate-400 hover:text-slate-100 transition">✕</button>' +
+  '</div>' +
+
+  '<div class="border-b border-white/10 p-5">' +
+  '<div class="mb-3 text-[10px] font-mono tracking-widest text-sky-300/80">LINKEDIN POST</div>' +
+  '<div class="flex items-center gap-3">' +
+  '<div class="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-emerald-400 to-cyan-500 font-bold text-[#04120b]">R</div>' +
+  '<div><div class="text-sm font-semibold text-slate-100">Rahul <span class="text-slate-500">· 1st</span></div>' +
+  '<div class="text-[11px] text-slate-500">DSA Quest OS · 30-day sprint</div></div>' +
+  '</div>' +
+  '<p class="mt-3 text-[13px] leading-relaxed text-slate-300">' + shareText + '</p>' +
+  '<div class="mt-3 overflow-hidden rounded-xl border border-white/10">' +
+  '<img src="og.png" alt="Dashboard preview" class="aspect-[1.91/1] w-full object-cover"/>' +
+  '<div class="bg-white/[0.04] px-3.5 py-2.5">' +
+  '<div class="text-[11px] text-slate-500">dsa-quest.rairahulr1.com</div>' +
+  '<div class="text-[13px] font-semibold text-slate-100">' + ogTitle + '</div>' +
+  '<div class="text-[11px] text-slate-500">' + shareDesc + '</div>' +
+  '</div></div>' +
+  '</div>' +
+
+  '<div class="p-5">' +
+  '<div class="mb-3 text-[10px] font-mono tracking-widest text-orange-300/80">REDDIT POST</div>' +
+  '<div class="text-[13px] font-semibold leading-snug text-slate-100">' + shareText + '</div>' +
+  '<div class="mt-2.5 flex items-center gap-3 rounded-xl border border-white/10 p-3">' +
+  '<img src="og.png" alt="" class="h-14 w-14 rounded-lg object-cover"/>' +
+  '<div class="min-w-0"><div class="truncate text-[13px] font-semibold text-slate-100">dsa-quest.rairahulr1.com</div>' +
+  '<div class="text-[11px] text-slate-500">link post · image preview attached</div></div>' +
+  '</div>' +
+  '</div>' +
+
+  '<div class="flex gap-2 border-t border-white/10 px-5 py-4">' +
+  '<button type="button" onclick="closePreview();share(\'linkedin\')" class="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-sky-500 to-sky-400 px-4 py-2.5 text-sm font-bold text-white hover:brightness-110 transition">Post to LinkedIn ↗</button>' +
+  '<button type="button" onclick="closePreview();share(\'reddit\')" class="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-orange-500 to-orange-400 px-4 py-2.5 text-sm font-bold text-white hover:brightness-110 transition">Post to Reddit ↗</button>' +
+  '</div>' +
+  '</div>' +
+  '</div>' +
+
   '<script>' +
+  'function openPreview() {' +
+  '  var m = document.getElementById("share-preview");' +
+  '  m.classList.remove("hidden"); m.classList.add("flex");' +
+  '  document.body.style.overflow = "hidden";' +
+  '}' +
+  'function closePreview() {' +
+  '  var m = document.getElementById("share-preview");' +
+  '  m.classList.add("hidden"); m.classList.remove("flex");' +
+  '  document.body.style.overflow = "";' +
+  '}' +
+  'document.addEventListener("keydown", function (e) { if (e.key === "Escape") closePreview(); });' +
   'function share(to) {' +
   '  var u = encodeURIComponent(location.href);' +
   '  var t = encodeURIComponent(' + JSON.stringify(shareText) + ');' +
